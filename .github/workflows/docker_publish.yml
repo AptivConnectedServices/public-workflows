@@ -9,7 +9,7 @@ name: Docker Publish
 #       - 'v*.*.*'
 # jobs:
 #   example:
-#     - uses: benfrisbie/workflows/.github/workflows/docker/publish.yml@main
+#     - uses: benfrisbie/workflows/.github/workflows/docker_publish.yml@main
 
 on:
   workflow_call:
