@@ -8,30 +8,24 @@ name: Snyk Docker
 # jobs:
 #   example:
 #     - uses: benfrisbie/workflows/.github/workflows/docker/snyk.yml@main
-#       with:
-#         image: ghcr.io/${{ github.repository }}:latest
 #       secrets:
 #         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN_ACV }}
 
 on:
   workflow_call:
       inputs:
-        image:
-          description: 'docker image to scan'
-          required: true
-          type: string
         dockerfile:
           description: 'path to the dockerfile'
           default: 'Dockerfile'
           required: false
           type: string
         severity-threshold:
-          description: 'snyk severity-threshold - possible options available at https://docs.snyk.io/features/snyk-cli/cli-reference#options'
+          description: 'snyk --severity-threshold flag - possible options available at https://docs.snyk.io/features/snyk-cli/cli-reference#options'
           default: 'high'
           required: false
           type: string
         fail-on:
-          description: 'snyk fail-on - possible options available at https://docs.snyk.io/features/snyk-cli/cli-reference#options'
+          description: 'snyk --fail-on flag - possible options available at https://docs.snyk.io/features/snyk-cli/cli-reference#options'
           default: 'all'
           required: false
           type: string
@@ -44,10 +38,17 @@ jobs:
     name: Run Snyk on Docker Image
     runs-on: ubuntu-latest
     steps:
+    - uses: actions/checkout@v2
+    - uses: docker/build-push-action@v2
+      with:
+        context: .
+        file: ${{ inputs.dockerfile }}
+        tags: test:latest
+        push: false
     - name: Run Snyk to check Docker image for vulnerabilities
       uses: snyk/actions/docker@master
       env:
         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
       with:
-        image: ${{ inputs.image }}
+        image: test:latest
         args: --file=${{ inputs.dockerfile }} --severity-threshold=${{ inputs.severity-threshold }} --fail-on=${{ inputs.fail-on }}
