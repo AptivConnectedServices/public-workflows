@@ -1,6 +1,17 @@
 
 name: Docker Build
 
+# --- Example Usage ---
+# on:
+#   pull_request:
+#     paths:
+#       - 'Dockerfile'
+# jobs:
+#   example:
+#     - uses: benfrisbie/workflows/.github/workflows/docker/build.yml@main
+#       with:
+#         push: false
+
 on:
   workflow_call:
     inputs:
