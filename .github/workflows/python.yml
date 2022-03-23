@@ -1,0 +1,85 @@
+name: Python
+# This workflow will install dependencies and run black, flake8, pytest.
+# It assumes all config files are available in default working directory
+
+on:
+  workflow_call:
+    inputs:
+      python-version:
+        description: "Python version (default: 3)"
+        default: "3"
+        required: false
+        type: string
+      python-cache-type:
+        description: "Cache for Python type (pip/pipenv) (default: None)"
+        required: false
+        type: string
+      enable-black:
+        description: "Enable black formatter (default: true)"
+        default: true
+        required: false
+        type: boolean
+      enable-flake8:
+        description: "Enable flake8 check (default: true)"
+        default: true
+        required: false
+        type: boolean
+      enable-pytest:
+        description: "Enable pytest (default: true)"
+        default: true
+        required: false
+        type: boolean
+      checkout-submodules:
+        description: Checkout submodules (true, false, recursive)
+        default: false
+        required: false
+        type: string
+        # options: ["false", "true", "recursive"]
+    secrets:
+      checkout-token:
+        required: false
+
+jobs:
+  python:
+    runs-on: ubuntu-latest
+    env:
+      PIP_DISABLE_PIP_VERSION_CHECK: "1"
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.checkout-token || github.token }}
+          submodules: ${{ inputs.checkout-submodules }}
+
+      - name: Set up Python ${{ inputs.python-version }}
+        uses: actions/setup-python@v3
+        id: setup-python
+        with:
+          python-version: "${{ inputs.python-version }}"
+          cache: ${{ inputs.python-cache-type }}
+
+      - name: Install pip dependencies
+        if: hashFiles('requirements.txt') != ''
+        run: pip install -r requirements.txt
+
+      - name: Install pipenv dependencies
+        if: hashFiles('Pipfile', 'Pipfile.lock') != ''
+        run: |
+          pip install --upgrade pipenv
+          pipenv install --dev --system
+
+      - name: Install workflow dependencies
+        run: pip install black flake8 pytest
+
+      - name: Format with black
+        if: inputs.enable-black
+        run: black --check .
+
+      - name: Lint with flake8
+        if: inputs.enable-flake8
+        run: flake8 --count
+
+      - name: Test with pytest
+        if: inputs.enable-pytest
+        run: pytest
