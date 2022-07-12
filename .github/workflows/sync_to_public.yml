@@ -21,4 +21,4 @@ jobs:
         run: |
           git remote add public "$SYNC_REPO"
           git fetch public
-          git push public sync:main
+          git push public HEAD:main
