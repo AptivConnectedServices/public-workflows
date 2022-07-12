@@ -4,6 +4,7 @@ on:
   push:
     branches:
     - sync
+    tags:
 
 jobs:
   sync:
@@ -20,4 +21,4 @@ jobs:
       - name: Sync to public repo
         run: |
           git remote add public "$SYNC_REPO"
-          git push public HEAD:main
+          git push public HEAD:main --tags
