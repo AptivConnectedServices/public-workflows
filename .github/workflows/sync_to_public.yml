@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       SSH_AUTH_SOCK: /tmp/ssh_agent.sock
-      SYNC_REPO: "git@github.com:AptivConnectedServices/workflows.git"
+      SYNC_REPO: "git@github.com:AptivConnectedServices/public-workflows.git"
     steps:
       - uses: actions/checkout@v1
       - name: Setup SSH Keys and known_hosts
