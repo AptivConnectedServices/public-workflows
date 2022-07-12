@@ -20,4 +20,5 @@ jobs:
       - name: Sync to public repo
         run: |
           git remote add public "$SYNC_REPO"
+          git fetch public
           git push public sync:main
