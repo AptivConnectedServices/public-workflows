@@ -18,6 +18,6 @@ jobs:
           ssh-agent -a "$SSH_AUTH_SOCK" > /dev/null
           ssh-add - <<< "${{ secrets.SYNC_KEY }}"
       - name: Sync to public repo
-        runs: |
+        run: |
           git remote add public "$SYNC_REPO"
           git push public sync:main
