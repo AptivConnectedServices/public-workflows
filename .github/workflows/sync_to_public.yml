@@ -1,0 +1,23 @@
+name: Sync to public repo
+
+on:
+  push:
+    branches:
+    - sync
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    env:
+      SSH_AUTH_SOCK: /tmp/ssh_agent.sock
+      SYNC_REPO: "git@github.com:AptivConnectedServices/workflows.git"
+    steps:
+      - uses: actions/checkout@v1
+      - name: Setup SSH Keys and known_hosts
+        run: |
+          ssh-agent -a "$SSH_AUTH_SOCK" > /dev/null
+          ssh-add - <<< "${{ secrets.SYNC_KEY }}"
+      - name: Sync to public repo
+        runs: |
+          git remote add public "$SYNC_REPO"
+          git push public sync:main
