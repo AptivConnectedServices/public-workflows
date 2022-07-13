@@ -1,0 +1,13 @@
+name: python reusable workflow
+
+on:
+  pull_request:
+    paths:
+      - 'requirements.txt'
+      - 'src/**'
+
+jobs:
+  build:
+    uses: AptivConnectedServices/public-workflows/.github/workflows/python.yml@main
+    with:
+      enable-pytest: false
