@@ -1,10 +1,10 @@
-The `docker` workflow is a simple workflow that can be used to build Docker images and optionally push them to the ghcr.io registry.
+The [docker.yml](../docker.yml) workflow is a simple workflow that can be used to build Docker images and optionally push them to the ghcr.io registry.
 
 # Example Usage
 ```
 jobs:
   example:
-    uses: AptivConnectedServices/public-workflows/.github/workflows/docker/docker.yml@main
+    uses: AptivConnectedServices/public-workflows/.github/workflows/docker.yml@main
     with:
       image-name: ${{ github.repository }}
       push: false
