@@ -1,0 +1,7 @@
+# -*- mode: default-generic -*-
+
+# These owners will be the default owners for everything in
+# the repo. Unless a later match takes precedence,
+# @cloud-infra-devops will be requested for
+# review when someone opens a pull request.
+*       @AptivConnectedServices/cloud-infra-devops
