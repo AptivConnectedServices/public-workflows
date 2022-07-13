@@ -1,0 +1,18 @@
+name: Docker
+
+on:
+  # push:
+  #   branches:
+  #     - main
+  #   tags:
+  #     - "v*.*.*"
+  pull_request:
+    paths:
+      - ".github/workflows/docker/*"
+
+jobs:
+  example:
+    uses: AptivConnectedServices/public-workflows/.github/workflows/docker/docker.yml@main
+    with:
+      image-name: ${{ github.repository }}
+      push: false
