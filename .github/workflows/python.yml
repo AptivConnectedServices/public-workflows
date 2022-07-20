@@ -53,7 +53,7 @@ jobs:
           submodules: ${{ inputs.checkout-submodules }}
 
       - name: Set up Python ${{ inputs.python-version }}
-        uses: actions/setup-python@v3
+        uses: actions/setup-python@v4
         id: setup-python
         with:
           python-version: "${{ inputs.python-version }}"
