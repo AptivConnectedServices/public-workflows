@@ -4,7 +4,7 @@ The [docker.yml](../docker.yml) workflow is a simple workflow that can be used t
 ```yaml
 jobs:
   example:
-    uses: AptivConnectedServices/public-workflows/.github/workflows/docker.yml@main
+    uses: AptivConnectedServices/public-workflows/.github/workflows/docker.yml@docker-v1
     with:
       name: ${{ github.repository }}
       push: ${{ github.event_name == 'push' }}
