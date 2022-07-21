@@ -22,4 +22,4 @@ jobs:
       - name: Sync to public repo
         run: |
           git remote add public "$SYNC_REPO"
-          git push public HEAD:main --tags
+          git push public HEAD:main --tags --force
